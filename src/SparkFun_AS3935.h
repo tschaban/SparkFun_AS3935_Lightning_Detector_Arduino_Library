@@ -2,7 +2,9 @@
 #define _SPARKFUN_AS3935_H_
 
 #include <Wire.h>
+/* NOT required for AFE Firmware
 #include <SPI.h>
+*/
 #include <Arduino.h>
 
 typedef uint8_t i2cAddress; 
@@ -73,15 +75,21 @@ class SparkFun_AS3935
     // Constructor to be used with SPI
     SparkFun_AS3935();
 
+/* NOT required for AFE Firmware
     // Constructor to be used with I-squared-C. 
     SparkFun_AS3935(i2cAddress address);
 
     // I-squared-C Begin
     bool begin(TwoWire &wirePort = Wire);
+*/
 
+    // I-squared-C Begin
+    bool begin(i2cAddress address, TwoWire &wirePort = Wire);
+
+/* NOT required for AFE Firmware
     // SPI begin 
     bool beginSPI(uint8_t user_CSPin, uint32_t spiPortSpeed, SPIClass &spiPort = SPI); 
-
+*/
     // REG0x00, bit[0], manufacturer default: 0. 
     // The product consumes 1-2uA while powered down. If the board is powered down 
     // the the TRCO will need to be recalibrated: REG0x08[5] = 1, wait 2 ms, REG0x08[5] = 0.
@@ -229,11 +237,15 @@ class SparkFun_AS3935
     void resetSettings();
 
   private:
-
+/* NOT required for AFE Firmware
     uint32_t _spiPortSpeed; // Given sport speed. 
     uint8_t _cs; // Chip select pin
+    */
     uint8_t _regValue; // Variable for returned register data. 
+    
+    /* NOT required for AFE Firmware
     uint8_t _spiWrite; // Variable used for SPI write commands. 
+    */
     uint8_t _i2cWrite; // Variable used for SPI write commands. 
     // Address variable. 
     i2cAddress _address; 
@@ -246,7 +258,9 @@ class SparkFun_AS3935
     uint8_t _readRegister(uint8_t _reg);
     // I-squared-C and SPI Classes
     TwoWire *_i2cPort; 
+    /* NOT required for AFE Firmware
     SPIClass *_spiPort; 
+    */
 
 };
 #endif
